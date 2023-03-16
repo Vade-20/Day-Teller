@@ -34,6 +34,7 @@ def reset(n=None):
     e3.delete(0,END)
     l5.config(text='')
     root.bind('<Return>',teller)
+    e1.focus_set()
 
 
 def teller(n=None):
@@ -196,4 +197,5 @@ b1.grid(row=2,column=2,columnspan=4,sticky=W+E)
 root.bind('<Return>',teller)
 root.bind('<Key>',check)
 root.bind('<Escape>',lambda n:root.quit())
+
 mainloop()
