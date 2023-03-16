@@ -27,31 +27,36 @@ e2.grid(row =1,column=3)
 e3.grid(row =1,column=5)
 
 
-def reset():
+def reset(n=None):
     global e1,e2,e3,l5
     e1.delete(0,END)
     e2.delete(0,END)
     e3.delete(0,END)
     l5.config(text='')
+    root.bind('<Return>',teller)
 
 
-def teller():
+def teller(n=None):
     from tkinter import messagebox
     global e1,e2,e3
-    date = [int(e1.get()),int(e2.get()),int(e3.get())]
+    try:
+        date = [int(e1.get()),int(e2.get()),int(e3.get())]
+    except ValueError:
+        error = messagebox.showerror('Error','Enter the date in the format (DD/MM/YYYY)')   
+        return None
     if not check_format(date):    
         error = messagebox.showerror('Error','Enter the date in the format (DD/MM/YYYY)')
         reset()
         return None
     if not check_month(date):
-        print("sen3")
         reset()
         return None
     d = day(date)
     sen = f'The day on {e1.get()}/{e2.get()}/{e3.get()} is {d}'
     l5.config(text=sen)
+    root.bind('<Return>',reset)
     
-
+  
 def check_format(n):
     n = [str(i) for i in n]
     if len(n[0]) > 2:
@@ -177,8 +182,18 @@ def day(n):
 
 
 
+def check(keys): #check where the entered value in the entery box is a valid input if not it prevent the invalid input to be entered
+    if str(keys.char).isalpha() or keys.char in ['[',']','{','}','/',',','<','.','>','?',':',';','-','_','+','=']:
+        from tkinter import messagebox
+        messagebox.showerror('Error', 'Non-numerical value is added ')
+        reset()
+
+
 b1 = Button(root,text = 'Reset',fg='gold',bg='sky blue',font= ('Comic Sans MS', '20'),command=reset,width=15,)
 b1.grid(row=2,column=0,columnspan=2,sticky=W+E)
 b1 = Button(root,text = 'Enter',fg='gold',bg='sky blue',font= ('Comic Sans MS', '20'),command=teller,width=20,)
 b1.grid(row=2,column=2,columnspan=4,sticky=W+E)
+root.bind('<Return>',teller)
+root.bind('<Key>',check)
+root.bind('<Escape>',lambda n:root.quit())
 mainloop()
