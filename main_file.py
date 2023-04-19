@@ -3,7 +3,11 @@ from tkinter import *
 root = Tk()
 root.title('Day Teller')
 root.config(bg='sky blue')
-root.iconbitmap(r'Day-Teller\calendar.ico')
+try:
+    root.iconbitmap(r'Day-Teller\calendar.ico')
+except:
+    pass
+
 l1 = Label(root,text='Day Teller',fg='gold',bg='sky blue', padx=250, font=('Comic Sans MS', '40'),
                )
 l1.grid(row=0,column=0,columnspan=6)
