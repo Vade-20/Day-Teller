@@ -3,6 +3,7 @@ from tkinter import *
 root = Tk()
 root.title('Day Teller')
 root.config(bg='sky blue')
+root.resizable(height=False,width=False)
 try:
     root.iconbitmap(r'Day-Teller\calendar.ico')
 except:
